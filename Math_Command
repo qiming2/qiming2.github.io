@@ -1,0 +1,40 @@
+Vector and Matrix:
+
+$$ \left[\begin{matrix} 00 & 01 \\\ 10 & 11 \\\ 20 & 21 \end{matrix}\right] $$
+
+$$
+  \begin{bmatrix}
+  1 & 2 & 2 \\\ 2 & 3 & 4 \\\ 4 & 4 & 2 \\\
+  \end{bmatrix}
+$$
+
+Basic Math syntax: https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+
+NewCommand:
+  Vector3 (column):
+      $\newcommand{\Vc}[3]{\begin{bmatrix}
+      #1 \\\ #2 \\\ #3 \\\
+      \end{bmatrix} }$
+  Usage:
+      \Vc{1}{2}{3}
+
+  Matrix 3 by 2 (column):
+      $\newcommand{\Mat}[1]{\begin{bmatrix}
+        #1
+      \end{bmatrix} }$
+  Usage:
+      \Mat{1 2 3 \\\ 2 3 4 \\\ 3 4 5 \\\}
+
+  Dot Product:
+    $\newcommand{\D}[2]{
+      #1 \cdot #2
+    }$
+  Usage:
+    \D{2}{3}
+
+  fraction:
+    $\newcommand{\Frac}[2]{
+      #1 \over #2
+    }$
+  Usage:
+    \Frac{1}{2}
