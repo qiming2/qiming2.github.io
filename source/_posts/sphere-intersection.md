@@ -34,7 +34,7 @@ According to our quadratic formula, we can get two roots for t:
 
 $$t = {-d \cdot (p - o) \pm \sqrt{(d \cdot (p - o))^2 - (d \cdot d)((p - o) \cdot (p - o) - R^2)}\over (d \cdot d)}\tag{6}\label{eq6}$$
 
-Finally, we can find the intersection by plugging t back into $\eqref{eq1}$ and find a point $a$, and there is no intersection between the ray and sphere if there is no non-negative root. Also, the unit normal vector can be calculated easily by \\((a - o)/R\\)
+Finally, we can find the intersection by plugging t back into \\(\eqref{eq1}\\) and find a point \\(a\\), and there is no intersection between the ray and sphere if there is non-negative root. Also, the unit normal vector can be calculated easily by \\((a - o)/R\\)
 
 Below code section is a sphere intersection function in C++ that assumes origin of sphere is at (0, 0, 0) with a radius 0.5:
 
@@ -54,8 +54,6 @@ bool Sphere::IntersectLocal(const Ray &r, Intersection &i)
       double t;
       glm::vec3 normal;
     };
-
-    A, B, C are member vertices that are glm::dvec3 storing position information
     */
     glm::dvec3 P = r.position;
     glm::dvec3 D = r.direction;
