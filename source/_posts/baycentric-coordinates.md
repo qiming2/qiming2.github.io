@@ -16,11 +16,11 @@ $\newcommand{\Frac}[2]{
 
 In OpenGL, vertex usually has many attributes like normal vector, uv coordinates, position vector and even color value, and also models are almost always drawn from a bunch of triangles that define each small piece of surface on those models. However, we can only set values to those vertices of each triangles but not those vertices that lie inside the triangles. How do find those values? This is where baycentric coordinates come into play.
 
-Baycentric coordinates essentially helps us to interpolate the value, like normal vector, uv coordinate, of a point that lies inside a triangle with vertex ABC and has a position = $\Vc{a}{b}{c}$.
+Baycentric coordinates essentially helps us to interpolate the value, like normal vector, uv coordinate, of a point that lies inside a triangle with vertex ABC.
 
 ![](triangle_intersection.png)
 
-According to the picture now if Q lies inside the triangle, position Q can always be expressed as some proportions of each position vector of each vertex ABC:
+According to the picture if Q lies inside the triangle, position Q can always be expressed as some proportions of each position vector of each vertex ABC:
 
 \begin{equation}
   Q = {\alpha}A + {\beta}B + {\gamma}C \label{eq1}
@@ -40,7 +40,7 @@ $(\alpha, \beta, \gamma)$ are the baycentric coordinates we are looking for. The
   \gamma = {\Frac{AreaQAB}{AreaABC}}\label{eq4}
 \end{equation}
 
-To calculate the baycentric coordinates we need to calculate the areas of all the subtriangles as well area of the triangle ABC. And this is pretty easy because of normal vector! Remember that half of the magnitude of a normal vector for one triangle is the area of that triangle:
+To calculate the baycentric coordinates we need to calculate the areas of all the subtriangles as well as area of the triangle ABC. And this is pretty easy because of normal vector! Remember that half of the magnitude of a normal vector for one triangle is the area of that triangle:
 
 \begin{equation}
   AreaABC = {||(B - A) \times (C - A)|| \over 2} \label{eq5}
@@ -66,7 +66,7 @@ Once we have our baycentric coordinates, we can easily calculate unit normal vec
   N_Q = {\alpha N_A + \beta N_B + \gamma N_C \over ||\alpha N_A + \beta N_B + \gamma N_C||}\label{eq9}
 \end{equation}
 
-As well as uv coordinate, but we don't normalize them; otherwise, you would get strange effect unless that is exactly what you want ^ ^!
+The uv coordinate can also be computed similarly, but we don't normalize them; otherwise, you would get strange effect unless that is exactly what you want ^ ^!
 
 \begin{equation}
   UV_Q = \alpha UV_A + \beta UV_B + \gamma UV_C \label{eq10}
@@ -86,9 +86,9 @@ void TriangleFace::Baycentric(Vertex &Q)
   }
 
   glm is math library that resembles glsl shader language.
-  a, b, c are member vertices that are glm::dvec3 storing position information for vertex ABC
-  a_n, b_n, c_n are normal vectors (normalized) for vertex ABC
-  a_uv, b_uv, c_uv are uv coodinates for vertex ABC
+  a, b, c are position vectors (glm::dvec3) for vertex ABC
+  a_n, b_n, c_n are normal vectors (glm::dvec3 and normalized) for vertex ABC
+  a_uv, b_uv, c_uv are uv vectors (glm::dvec2) for vertex ABC
   */
 
   // Get the barycentric coordinate constants
