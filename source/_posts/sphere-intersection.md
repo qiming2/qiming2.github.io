@@ -54,6 +54,8 @@ bool Sphere::IntersectLocal(const Ray &r, Intersection &i)
       double t;
       glm::vec3 normal;
     };
+
+    A, B, C are member vertices that are glm::dvec3 storing position information
     */
     glm::dvec3 P = r.position;
     glm::dvec3 D = r.direction;

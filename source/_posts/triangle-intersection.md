@@ -62,7 +62,7 @@ We will get an equation like the following:
 
 
 \begin{align*}
-  \D{n}{p + td} = k
+  \D{n}{(p + td)} = k
 \end{align*}
 
 \begin{align*}
@@ -133,6 +133,8 @@ bool TriangleFace::IntersectLocal(const Ray &r, Intersection &i)
     double t;
     glm::vec3 normal;
   };
+
+  A, B, C are member vertices that are glm::dvec3 storing position information
   */
 
   // Calculate the plane normal ((B - A) x (C - A))
