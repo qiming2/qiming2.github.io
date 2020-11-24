@@ -1,7 +1,8 @@
 ---
 title: Baycentric Coordinates
 date: 2020-11-23 15:43:36
-tags: [OpenGL, Graphics]
+tags: [OpenGL]
+categories: [Graphics]
 ---
 $\newcommand{\Vc}[3]{\begin{bmatrix}
 #1 \\\ #2 \\\ #3 \\\
