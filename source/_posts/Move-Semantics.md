@@ -2,7 +2,7 @@
 title: Move Semantics
 date: 2020-12-06 07:51:25
 tags: [Move Semantics]
-Category: [C++]
+categories: [C++]
 ---
 
 # Rvalue and Lvalue
