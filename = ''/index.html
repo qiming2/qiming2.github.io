@@ -141,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">3</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">4</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -151,7 +151,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/" rel="section"><i class="fa fa-archives fa-fw"></i>Archives<span class="badge">4</span></a>
+    <a href="/" rel="section"><i class="fa fa-archives fa-fw"></i>Archives<span class="badge">5</span></a>
 
   </li>
   </ul>
@@ -205,7 +205,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -242,6 +242,81 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en,zh-CN,default">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Move-Semantics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mydrawing.png">
+      <meta itemprop="name" content="Qiming Guan">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ktou">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Move-Semantics/" class="post-title-link" itemprop="url">Move Semantics</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-12-06 07:51:25 / Modified: 16:37:23" itemprop="dateCreated datePublished" datetime="2020-12-06T07:51:25-08:00">2020-12-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Rvalue-and-Lvalue"><a href="#Rvalue-and-Lvalue" class="headerlink" title="Rvalue and Lvalue"></a>Rvalue and Lvalue</h1><p>When entering the world of C++, we might hear a lot of people talking about rvalue and lvalue, but what exactly are they and why we care about knowing them? Understanding how everything behind the scene works will render us more flexibility and control of the tools we are using like in this case C++. In a very simplified way, Lvalue usually refers to a value that occupies a specific piece of memory that identifies the value, which is also called “locator value”. Rvalue refers to a data value that is at some temporary memory address, which we can not use it to identify the value. This might seem abstract at first, but don’t worry I’ll give some examples which will demonstrate these two concepts pretty well:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">3</span>; <span class="comment">// i occupies a specific memory location on stack, 3 is a data value which is a rvalue.</span></span><br><span class="line"><span class="number">1</span> = <span class="number">3</span>; <span class="comment">// Error, cannot assign a data value to a rvalue. Do not make sense.</span></span><br><span class="line">i = <span class="number">3</span>; <span class="comment">// Correct, change the value at the location where i resides on stack. When we access i, we are interpreting the value at i&#x27;s memory location.</span></span><br><span class="line">i + <span class="number">1</span> = <span class="number">2</span>; <span class="comment">// Error, since i + 1 evaluates to rvalue, here i + 1 is an integer.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>There are also two types of references: rvalue reference and lvalue reference. Reference is like adding another name to the value. Thus, we can not tag name to an object that does not exist. Also, we need to assign corresponding reference type to the value type (lvalue or rvalue).</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp; a; <span class="comment">// Error, don&#x27;t make sense to tag a name to nothing</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">3</span>; <span class="comment">// Initialize an integer on stack</span></span><br><span class="line"><span class="keyword">int</span> &amp;lref = i; <span class="comment">// lref is a lvalue reference of i and manipulating a will reflect on i</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> &amp;&amp;rref&#123;<span class="number">5</span>&#125;; <span class="comment">// rref is a rvalue reference that holds a value 5</span></span><br></pre></td></tr></table></figure>
+
+<p>Now, let’s take a look at move semantics. Normally, in order to write efficient c++ code, we want to add rvalue reference copy constructor and copy operator= that takes a rvalue reference. Essentially, a move means that we want to move the resource of one object into another object instead of copying the resource. Rvalue indicates that the value is temporary and will be destroyed soon, thus we can safely steal the resource from it.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entity</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">  Entity(<span class="keyword">int</span> x)</span><br><span class="line">  &#123;</span><br><span class="line">    allocated_ptr = <span class="built_in">malloc</span>(x); <span class="comment">// We allocate some space of x bytes on heap</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Move copy constructor</span></span><br><span class="line">  Entity(Entity&amp;&amp; other)</span><br><span class="line">  &#123;</span><br><span class="line">    allocated_ptr = other.allocated_ptr; <span class="comment">// we set the pointer value to the allocated space of the other entity</span></span><br><span class="line"></span><br><span class="line">    other.allocated_ptr = <span class="literal">nullptr</span>; <span class="comment">// we set pointer value of the other entity to nullptr</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Move copy method</span></span><br><span class="line">  Entity&amp; <span class="keyword">operator</span>=(Entity&amp;&amp; other)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (&amp;other == <span class="keyword">this</span>) <span class="keyword">return</span> *<span class="keyword">this</span>; <span class="comment">// We need to check whether the passed in argument is the object itself</span></span><br><span class="line"></span><br><span class="line">    allocated_ptr = other.allocated_ptr; <span class="comment">// we set the pointer value to the allocated space of the other entity</span></span><br><span class="line"></span><br><span class="line">    other.allocated_ptr = <span class="literal">nullptr</span>; <span class="comment">// we set pointer value of the other entity to nullptr</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ~Entity() &#123;</span><br><span class="line">    <span class="built_in">free</span>(allocated_ptr); <span class="comment">// free nullptr does not do anything</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">void</span>* allocated_ptr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">Entity <span class="title">x</span><span class="params">(<span class="number">5</span>)</span></span>; <span class="comment">// allocate space in Entity x</span></span><br><span class="line">  Entity a = <span class="built_in">std</span>::move(x); <span class="comment">// allocated space is moved from x to a, and std::move(T) will cast T to &amp;&amp;T</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In the above example, we can see that in move constructor or move copy method, there is no new space allocated but only assign operations performed. This tool allows us to better manage our meomry space usage.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
